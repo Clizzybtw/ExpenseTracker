@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+[data-theme='dark'] {
+  --bg: #0b0d0c;
+  --surface: #111413;
+  --raised: #191d1b;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.12);
+  --text: #eef1ef;
+  --text-secondary: #c3ccc7;
+  --text-muted: #a9b3ae;
+  --text-faint: #7c857f;
+  --accent: #60bc71;
+  --accent-hover: #86d391;
+  --accent-subtle: rgba(96, 188, 113, 0.14);
+  --ok: #60bc71;
+  --warning: #eba941;
+  --danger: #e24947;
+  color-scheme: dark;
+}
+
+/*
+  WHY: the dark status colours measure 2.35:1 (accent) and 2.04:1 (warning)
+  against white — far below the 4.5:1 minimum, with amber effectively invisible.
+  These are the same hues re-derived at lower lightness so each clears 4.5:1.
+*/
+[data-theme='light'] {
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --raised: #f1f5f9;
+  --line: rgba(0, 0, 0, 0.09);
+  --line-strong: rgba(0, 0, 0, 0.15);
+  --text: #0b0d0c;
+  --text-secondary: #333c37;
+  --text-muted: #5b655f;
+  --text-faint: #7c857f;
+  --accent: #18883a;
+  --accent-hover: #12702f;
+  --accent-subtle: rgba(24, 136, 58, 0.12);
+  --ok: #18883a;
+  --warning: #a66800;
+  --danger: #d73e3f;
+  color-scheme: light;
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Public Sans', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Money and dates align in columns only with tabular figures. */
+  .num {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::placeholder { color: var(--text-faint); }
+}
+
+@layer utilities {
+  .skeleton {
+    background: linear-gradient(90deg, var(--raised) 25%, var(--line-strong) 50%, var(--raised) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton { animation: none; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
